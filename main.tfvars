@@ -1,3 +1,15 @@
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+    }
+  }
+}
+
+provider "aws" {
+  region = "us-west-1"
+}
+
 module "vpc" {
     source = "../../../modules/vpc"
 
@@ -67,7 +79,7 @@ module "security_group" {
       cidr_blocks     = ["0.0.0.0/0"]
     }
   ]
-  
+
   sg_egress = [
     {
       from_port = 0
