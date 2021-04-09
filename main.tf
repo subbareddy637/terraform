@@ -11,14 +11,14 @@ provider "aws" {
 }
 
 module "vpc" {
-    source = "../../../modules/vpc"
+    source = "./modules/vpc"
 
     vpc_cidr = var.vpc_cidr
 }
 
 
 module "public_subnet" {
-    source = "../../../modules/subnets"
+    source = "./modules/subnets"
 
     subnet_cidr = var.public_subnet_cidr
     vpc_id = module.vpc.vpc.vpc_id
@@ -28,7 +28,7 @@ module "public_subnet" {
 }
 
 module "private_subnet" {
-    source = "../../../modules/subnets"
+    source = "./modules/subnets"
 
     subnet_cidr = var.private_subnet_cidr
     vpc_id = module.vpc.vpc.vpc_id
@@ -38,14 +38,14 @@ module "private_subnet" {
 }
 
 module "internet_gateway" {
-    source = "../../../modules/internetgateway"
+    source = "./modules/internetgateway"
 
     vpc_id = module.vpc.vpc.id
 }
 
 
 module "security_group" {
-    source = "../../../modules/securitygroups"
+    source = "./modules/securitygroups"
 
     name = var.sg_name
     descrition = var.description
@@ -93,7 +93,7 @@ module "security_group" {
 
 
 module "ec2_instance" {
-    source = "../../../modules/ec2"
+    source = "./modules/ec2"
 
     ec2_count = var.instance_count
     ami = var.ami
