@@ -13,28 +13,28 @@ provider "aws" {
 module "vpc" {
     source = "../../../modules/vpc"
 
-    vpc_cidr = "10.0.0.0/16"
+    vpc_cidr = var.vpc_cidr
 }
 
 
 module "public_subnet" {
     source = "../../../modules/subnets"
 
-    subnet_cidr = ["10.0.1.0/24, 10.0.2.0/24"]
+    subnet_cidr = var.public_subnet_cidr
     vpc_id = module.vpc.vpc.vpc_id
-    availability_zone = ["us_east-1a, us-east-1b"]
+    availability_zone = var.public_availability_zone
     map_public_ip_on_launch = "true"
-    subnet_name = "public"
+    subnet_name = var.public_subnet_name
 }
 
 module "private_subnet" {
     source = "../../../modules/subnets"
 
-    subnet_cidr = ["10.0.5.0/24, 10.0.6.0/24"]
+    subnet_cidr = var.private_subnet_cidr
     vpc_id = module.vpc.vpc.vpc_id
-    availability_zone = ["us_east-1a, us-east-1b"]
+    availability_zone = var.private_availability_zone
     map_public_ip_on_launch = "true"
-    subnet_name = "private"
+    subnet_name = var.private_subnet_name
 }
 
 module "internet_gateway" {
@@ -47,8 +47,8 @@ module "internet_gateway" {
 module "security_group" {
     source = "../../../modules/securitygroups"
 
-    name = "security_group"
-    descrition = ""
+    name = var.sg_name
+    descrition = var.description
     vpc_id = module.vpc.vpc.id
 
     sg_ingress = [
@@ -95,11 +95,11 @@ module "security_group" {
 module "ec2_instance" {
     source = "../../../modules/ec2"
 
-    ec2_count = "2"
-    ami = "ami-0742b4e673072066f"
-    instance_type = "t2.micro"
+    ec2_count = var.instance_count
+    ami = var.ami
+    instance_type = var.instance_type
     vpc_id = module.vpc.vpc.vpc_id
     subnet_ids = module.public_subnet.subnets.id
     security_group = module.security_group.securitygroups.vpc_id
-    ec2_name = "public"
+    ec2_name = var.ec2-name
 }
