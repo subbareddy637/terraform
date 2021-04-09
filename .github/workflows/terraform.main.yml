@@ -33,15 +33,7 @@ jobs:
       - name: Terraform Init
         id: init
         run: terraform init
-
-      - name: Terraform Plan
-        id: plan
-        run: terraform plan --var-file main.tfvars -input=false -lock=false
-
-      - name: Terraform Plan Status
-        if: steps.plan.outcome  == 'failure'
-        run: exit 1
-
+        
       - name: Terraform Apply
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
         run: terraform apply -auto-approve --var-file main.tfvars -input=false -lock=false
