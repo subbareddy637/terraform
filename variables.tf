@@ -16,4 +16,5 @@ variable "description" {}
 variable "instance_count" {}
 variable "ami" {}
 variable "instance_type" {}
+variable "key_name" {}
 variable "ec2_name" {}

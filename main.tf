@@ -101,5 +101,6 @@ module "ec2_instance" {
     vpc_id = module.vpc.vpc.vpc_id
     subnet_ids = module.public_subnet.subnets.id
     security_group = module.security_group.securitygroups.vpc_id
+    key_name = var.key_name
     ec2_name = var.ec2-name
 }
