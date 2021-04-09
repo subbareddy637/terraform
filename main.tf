@@ -48,7 +48,7 @@ module "security_group" {
     source = "./modules/securitygroups"
 
     name = var.sg_name
-    descrition = var.description
+    description = var.description
     vpc_id = module.vpc.vpc.id
 
     sg_ingress = [
